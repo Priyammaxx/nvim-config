@@ -25,7 +25,7 @@ return {
 
         mason_lspconfig.setup({
             ensure_installed = servers,
-            automatic_enable = true -- Automatically enable installed servers
+            automatic_enable = false -- Automatically enable installed servers
         })
 
         local nvim_lsp = require("lspconfig")
