@@ -17,7 +17,8 @@ return {
     -- Enable formatting on save (recommended)
     format_on_save = {
       timeout_ms = 500,
-      lsp_fallback = true, -- Fallback to LSP formatting if no specific formatter is found
+      -- lsp_fallback = true, -- Fallback to LSP formatting if no specific formatter is found
+      lsp_fallback = false, -- Fallback to LSP formatting if no specific formatter is found
     },
     -- Define formatters for filetypes
     formatters_by_ft = {

@@ -32,6 +32,15 @@ return {
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
         local on_attach = function(client, bufnr)
+            -- new code addition
+            local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+
+            -- shut LSP formatting for C / C++ file
+            if filetype == "c" or filetype == "cpp" then
+                client.server_capabilities.documentFormattingProvider = false
+                client.server_capabilities.documentRangeFormattingProvider = false
+            end
+
             if client.server_capabilities.documentFormattingProvider then
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     group = vim.api.nvim_create_augroup("LspFormat", { clear = true }),

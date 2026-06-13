@@ -1,30 +1,5 @@
 -- vim.opt.guicursor = ""
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'c', 'cpp' }, -- Apply to 'c' and 'cpp' filetypes
-  callback = function()
-    -- These options are set locally for the current buffer (setlocal)
-    -- They will override any global settings for C/C++ files.
-
-    -- 4-space tab indentation for C/C++
-    vim.opt_local.tabstop = 4       -- Display tabs as 4 spaces
-    vim.opt_local.shiftwidth = 4    -- Indent by 4 spaces
-    vim.opt_local.expandtab = false -- Use actual tab characters
-    vim.opt_local.softtabstop = 4   -- Tab/Backspace in insert mode moves 4 spaces
-
-    -- You might also want these C/C++ specific indentation options
-    vim.opt_local.autoindent = true
-    vim.opt_local.smartindent = true
-    -- vim.opt_local.cindent = true      -- Enable C-style indentation rules (highly recommended for C/C++)
-
-    -- Other C/C++ specific settings you might want:
-    vim.opt_local.commentstring = '// %s' -- Set comment string for 'gc' and other comment plugins
-    vim.opt_local.formatoptions = 'tcroq' -- Adjust how comments and lines are formatted (e.g., wrap comments)
-  end,
-  -- You can optionally add an augroup to manage these autocmds.
-  -- This is good practice to ensure they are cleared when reloading config.
-  group = vim.api.nvim_create_augroup('C_CPP_Settings', { clear = true }),
-})
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
@@ -95,4 +70,60 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
+})
+
+
+-- vim.g.clipboard = {
+--   name = 'WslClipboard',
+--   copy = {
+--     ['+'] = 'clip.exe',
+--     ['*'] = 'clip.exe',
+--   },
+--   paste = {
+--     ['+'] =
+--     'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+--     ['*'] =
+--     'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+--   },
+--   cache_enabled = 0,
+-- }
+
+vim.g.clipboard = {
+  name = 'WslClipboard',
+  copy = {
+    ['+'] = 'clip.exe',
+    ['*'] = 'clip.exe',
+  },
+  paste = {
+    ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  },
+  cache_enabled = 0,
+}
+
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp' }, -- Apply to 'c' and 'cpp' filetypes
+  callback = function()
+    -- These options are set locally for the current buffer (setlocal)
+    -- They will override any global settings for C/C++ files.
+
+    -- 4-space tab indentation for C/C++
+    vim.opt_local.tabstop = 4      -- Display tabs as 4 spaces
+    vim.opt_local.shiftwidth = 4   -- Indent by 4 spaces
+    vim.opt_local.expandtab = true -- don't Use actual tab characters
+    vim.opt_local.softtabstop = 4  -- Tab/Backspace in insert mode moves 4 spaces
+
+    -- You might also want these C/C++ specific indentation options
+    vim.opt_local.autoindent = true
+    vim.opt_local.smartindent = true
+    -- vim.opt_local.cindent = true      -- Enable C-style indentation rules (highly recommended for C/C++)
+
+    -- Other C/C++ specific settings you might want:
+    vim.opt_local.commentstring = '// %s' -- Set comment string for 'gc' and other comment plugins
+    vim.opt_local.formatoptions = 'tcroq' -- Adjust how comments and lines are formatted (e.g., wrap comments)
+  end,
+  -- You can optionally add an augroup to manage these autocmds.
+  -- This is good practice to ensure they are cleared when reloading config.
+  group = vim.api.nvim_create_augroup('C_CPP_Settings', { clear = true }),
 })
